@@ -8,12 +8,18 @@ public class PlaceBehaviour : MonoBehaviour
 
     public bool hasPiece;
 
+    public bool isAnswerInOrder;
+
     public PieceBehaviour piecePlaced;
+
+    public int orderInQuestion;
 
     // Start is called before the first frame update
     void Start()
     {
         hasPiece = false;
+
+        isAnswerInOrder = false;
 
         pieces = GameObject.FindGameObjectsWithTag("Piece");
     }
@@ -33,7 +39,10 @@ public class PlaceBehaviour : MonoBehaviour
 
                         piecePlaced = pieces[i].GetComponent<PieceBehaviour>();
 
-                        GetComponent<SpriteRenderer>().color = Color.green;
+                        if(piecePlaced.orderInAnswer == orderInQuestion)
+                        {
+                            isAnswerInOrder = true;
+                        }
                     }
                 }
             }
@@ -43,6 +52,7 @@ public class PlaceBehaviour : MonoBehaviour
     public void resetPlace()
     {
         hasPiece = false;
+        isAnswerInOrder = false;
         piecePlaced = null;
         GetComponent<SpriteRenderer>().color = Color.white;
 

@@ -15,6 +15,8 @@ public class PieceBehaviour : MonoBehaviour
 
     public List<Color> colors;
 
+    public int orderInAnswer;
+
     GameObject[] places;
 
 

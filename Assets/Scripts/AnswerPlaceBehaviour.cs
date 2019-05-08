@@ -10,7 +10,7 @@ public class AnswerPlaceBehaviour : MonoBehaviour
 
     GameObject[] places;
 
-    private bool hasAnswer;
+    public bool hasAnswer;
 
     private Color initialColor;
 
@@ -21,24 +21,24 @@ public class AnswerPlaceBehaviour : MonoBehaviour
 
         places = GameObject.FindGameObjectsWithTag("Place");
 
-        initialColor = Color.gray;
+        initialColor = new Color(0.01176471f, 0.05882353f, 0.1019608f);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        bool allHavePiece = true;
+        bool allHavePieceInOrder = true;
 
-        for(int i = 0; i < places.Length && allHavePiece; i++)
+        for(int i = 0; i < places.Length && allHavePieceInOrder; i++)
         {
-            if( !places[i].GetComponent<PlaceBehaviour>().hasPiece )
+            if( !places[i].GetComponent<PlaceBehaviour>().hasPiece || !places[i].GetComponent<PlaceBehaviour>().isAnswerInOrder )
             {
-                allHavePiece = false;
+                allHavePieceInOrder = false;
             }
         }
 
-        if( allHavePiece )
+        if(allHavePieceInOrder)
         {
 
             List<Color> sharedColors = places[0].GetComponent<PlaceBehaviour>().piecePlaced.colors;
