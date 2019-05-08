@@ -34,17 +34,15 @@ public class PieceBehaviour : MonoBehaviour
         {
             
             Touch touch = Input.GetTouch(0);
-            Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
+            Vector3 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
 
             Vector2 touchPosWorld2D = new Vector2(touchPos.x, touchPos.y);
 
-            //We now raycast with this information. If we have hit something we can process it.
-            RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
 
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    if (hitInformation.collider != null && hitInformation.transform.gameObject == this.gameObject)
+                    if (Physics2D.OverlapPoint(touchPosWorld2D) == GetComponent<Collider2D>())
                     {
                         deltaX = touchPos.x - transform.position.x;
                         deltaY = touchPos.y - transform.position.y;
@@ -53,7 +51,7 @@ public class PieceBehaviour : MonoBehaviour
 
                 case TouchPhase.Moved:
 
-                    if (hitInformation.collider != null && hitInformation.transform.gameObject == this.gameObject)
+                    if (Physics2D.OverlapPoint(touchPosWorld2D) == GetComponent<Collider2D>())
                     {
                         transform.position = new Vector2(touchPos.x - deltaX, touchPos.y - deltaY);
 
@@ -62,6 +60,8 @@ public class PieceBehaviour : MonoBehaviour
                         if (placeIndex >= 0)
                         {
                             places[placeIndex].GetComponent<PlaceBehaviour>().resetPlace();
+
+                            placeIndex = -1;
                         }
                     }
                     break;
