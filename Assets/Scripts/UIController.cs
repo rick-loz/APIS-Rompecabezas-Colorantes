@@ -6,21 +6,29 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     private int time = 0;
+
+    private string highScoreVariable;
+
     public Text timer;
     public Text highscore;
     public Button nextLevel;
 
+    public int level = 0;
+
     //Crear un Highscore en el usuario
     void Start()
     {
+        highScoreVariable = "Highscore" + level;
+
         StartTimer();
 
-        if (PlayerPrefs.HasKey("Highscore") == true)
+        if (PlayerPrefs.HasKey(highScoreVariable) == true)
         {
-            highscore.text = PlayerPrefs.GetInt("Highscore").ToString();
+            highscore.text = "Highscore: " + PlayerPrefs.GetInt(highScoreVariable).ToString();
         }
         else
         {
+            PlayerPrefs.SetInt(highScoreVariable, int.MaxValue);
             highscore.text = "No High Scores Yet";
         }
     }
@@ -38,7 +46,9 @@ public class UIController : MonoBehaviour
     public void StopTimer()
     {
         CancelInvoke();
-        if (time < PlayerPrefs.GetInt("Highscore"))
+
+        int highScore = PlayerPrefs.GetInt(highScoreVariable);
+        if (time < highScore)
         {
             SetHighscore();
         }
@@ -47,14 +57,14 @@ public class UIController : MonoBehaviour
 
     public void SetHighscore()
     {
-        PlayerPrefs.SetInt("Highscore", time);
-        highscore.text = "Highscore: " + PlayerPrefs.GetInt("Highscore").ToString();
+        PlayerPrefs.SetInt(highScoreVariable, time);
+        highscore.text = "Highscore: " + PlayerPrefs.GetInt(highScoreVariable).ToString();
 
     }
 
     public void ClearHighscores()
     {
-        PlayerPrefs.DeleteKey("Highscore");
+        PlayerPrefs.DeleteKey(highScoreVariable);
         highscore.text = "No High Scores Yet";
     }
 

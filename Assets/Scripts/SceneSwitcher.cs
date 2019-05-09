@@ -14,4 +14,19 @@ public class SceneSwitcher : MonoBehaviour
     {
         SceneManager.LoadScene("Level" + index + "Scene");
     }
+
+    public void GoToReadings()
+    {
+        SceneManager.LoadScene("ReadingsListScene");
+    }
+
+    public void GoToSpecificReading()
+    {
+        SceneManager.LoadScene("ReadingSubject");
+    }
+
+    public void GoToHighscores()
+    {
+        SceneManager.LoadScene("HighscoresScene");
+    }
 }
